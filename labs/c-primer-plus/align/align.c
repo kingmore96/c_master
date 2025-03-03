@@ -9,12 +9,12 @@ typedef struct A {
 
 typedef struct B {
 	int v1;
-	double v2;
-	char v3;
-	int v4;
-}__attribute__((aligned(2))) B_t;//struct max align size is 4 in 32bit system,when align 2,it finally use 4;
+	char v2;
+	short v3;
+	short v4;
+}__attribute__((aligned(2))) B_t;//struct max align size is 4 in 32bit system,when align 2,it finally use 4;(if not the size should be 10 rather than 12)
 
-typedef struct __attribute__((aligned(8))) C {//struct max align size is 4 in 32bit system ,when align 8 ,it finally use 8(max of these two params)
+typedef struct __attribute__((aligned(8))) C {//struct max align size is 4 in 32bit system ,when align 8 ,it finally use 8(max of these two params; (if not,the size should be 20 rather than 24)
 	int v1;
 	double v2;
 	char v3;
@@ -51,7 +51,4 @@ int main(){
 	printf("D_t offset v3:%d\n",offsetof(D_t,v3));
 	return 0;
 }
-
-
-
 
