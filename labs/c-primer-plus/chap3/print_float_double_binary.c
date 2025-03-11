@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdint.h>
+#include <string.h>
 
 #define print_binary(x) _Generic((x), \
         float: print_float_binary, \
@@ -15,8 +16,40 @@
 int valid_float(float num)
 {
 	//Strict Aliasing Rule
-	
+	uint32_t bits;
+	memcpy(&bits,&num,sizeof(num));
 
+	const uint32_t exp_mask = 0x7F800000;
+	const uint32_t mantissa_mask = 0x007FFFFF;
+
+	uint32_t exp = (bits & exp_mask) >> 23;
+	uint32_t mantissa = bits & mantissa_mask;
+
+	//1. 0xFF will be received as int.
+		//if the value exceeds the range of int, then try unsigned int,long,unsigned long etc...
+	//2. the int type 0xFF is promoted to uint32_t for comparison with exp
+		//promotion rules:
+		//zero extention: high bits will be padded with zeros.
+			//applicable types:unsigned types
+		//sign extention: high bits will be padded with the sign bit of the original data type.
+			//applicable types:signed types
+		//Rule:
+		//1. Integer with a width smaller than int(such as short char) will be promoted to int or unsigned int when participating in the operation.
+		//2. When operand types are different, the type with the lower priority will be converted to the type with the higher priority.
+			//1. The priority of unsigned types is higher than that of signed types.
+			//2. Types with greater width have a higher priority.
+		//Usage recommendations:
+		//1. Prefer using unsigned types for bit operations.
+		//2. The signed types may lead to unexpected results when mixed with unsigned types after sign extention.
+	if(exp == 0xFF){
+		return mantissa ? FLOAT_NAN:FLOAT_INF; 
+	}
+
+	if(exp == 0 && mantissa != 0){
+		return FLOAT_DEBORMAL;
+	}
+	return FLOAT_VALID;
+}
 
 
 
