@@ -46,6 +46,19 @@ void test3()
 
 void test4()
 {
+	int matrix[3][4] = {
+		{1,2,3,4},
+		{5,6,7,8},
+		{9,10,11,12}
+	};
+
+	int *ptr = &matrix[0][0];
+
+	printf("access 6 : %d\n",*(ptr + 5));
+	printf("access 3 : %d\n",*(*(matrix + 1) - 2));
+	printf("access 11 : %d\n",*((int*)(&matrix + 1)-2));
+}
+	
 	
 
 
@@ -54,6 +67,7 @@ int main(void)
 	test1();
 	test2();
 	test3();
+	test4();
 	return 0;
 }
 
