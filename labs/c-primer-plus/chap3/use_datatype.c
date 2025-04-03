@@ -88,6 +88,152 @@ void test7()
 	}
 }
 
+void print_bits_double(double d)
+{
+	union{
+		double d;
+		uint64_t v;
+	}c;
+
+	c.d = d;
+	
+	for(int i = 0;i<64;i++){
+		printf("%d",(c.v & 1ULL<<(64-i-1))? 1:0);
+		if(i == 0 || i == 11){
+			printf(" ");
+		}
+	}
+	printf("\n");
+}
+
+void print_bits_float(float f)
+{
+	union{
+		float f;
+		uint32_t v;
+	}c;
+	c.f = f;
+
+	for(int i =0;i<32;i++){
+		printf("%d",(c.v &1<<(32-i-1))? 1: 0);
+		if(i == 0 || i == 8){
+			printf(" ");
+		}
+	}
+	printf("\n");
+}
+	
+
+void test8()
+{
+	double d = 3.1415926534;
+	print_bits_double(d);
+	printf("3.1415926534 = %.15f\n",d);
+
+	float f = d;
+	print_bits_float(f);
+	printf("3.1415926534 = %.15f\n",f);
+
+	float f2 = 3.1415926534;
+	printf("3.1415926534 = %.15f\n",f2);
+
+	union{
+		float f2;
+		uint32_t v;
+	}c;
+
+	c.v = 1078530011U;
+	printf("1078530011U = %.15f\n",c.f2);
+}
+
+void test9()
+{
+	int i = 70000;
+	short s = i;
+
+	unsigned char *p = (unsigned char*)&i;
+
+	for(int i =0;i<sizeof(i);i++){
+		printf("%02X ",*(p+i));
+	}
+
+	printf("\n");
+	p = (unsigned char*)&i;
+
+	for(int i = 0;i<sizeof(short);i++){
+		printf("%02X ",*(p+i));
+	}
+	printf("\n");
+}	
+
+void test10()
+{
+	unsigned long ul_a = 0xFFFFFFFFFFFFFFFFL;
+	unsigned long long ull_b = ul_a;
+
+	printf("ul_a = %lu, ull_b = %llu\n",ul_a,ull_b);
+
+	unsigned int ui_a = 0xFFFFFFFF;
+	int i_b = ui_a;
+	printf("ui_a = %u, i_b = %d\n",ui_a,i_b);
+	
+	int i_a = 0xFFFFFFFF;
+	unsigned int ui_b = i_a;
+	printf("i_a = %d,ui_b = %u\n",i_a,ui_b);
+
+	long l_a = 0xFFFFFFFFFFFFFFFF;
+	long long ll_b = l_a;
+	printf("l_a = %ld, ll_b = %lld\n",l_a,ll_b);
+}
+
+void test11()
+{
+	uint64_t u64 = 0xFFFFFFFFFFFFFFFFL;
+	uint32_t u32 = u64;
+	printf("u32 = %u\n",u32);
+
+	int32_t i32 = u64;
+	printf("i32 = %d\n",i32);
+
+	int64_t i64 = 0xFFFFFFFFFFFFFFFFL;
+	u32 = i64;
+	printf("u32 = %u\n",u32);
+
+	i32 = i64;
+	printf("i32 = %d\n",i32);
+}
+
+void test12()
+{
+	uint32_t u32 = 0xFFFFFFFF;
+	uint64_t u64 = u32;
+	printf("u64 = %lu\n",u64);
+
+	uint16_t u16 = 0xFFFF;
+	u64 = u16;
+	printf("u64 = %lu\n",u64);
+
+	int64_t i64 = u32;
+	printf("i64 = %ld\n",i64);
+	
+	i64 = u16;
+	printf("i64 = %ld\n",i64);
+	
+	int32_t i32 = 0xFFFFFFFF;
+	u64 = i32;
+	printf("u64 = %lu\n",u64);
+
+	int16_t i16 = 0xFFFF;
+	u64 = i16;
+	printf("u64 = %lu\n",u64);
+
+	i64 = i32;
+	printf("i64 = %ld\n",i64);
+
+	i64 = i16;
+	printf("i64 = %ld\n",i64);
+}
+	
 int main(void)
 {
 	test1();
@@ -97,4 +243,9 @@ int main(void)
 	test5();
 	test6();
 	test7();
+	test8();
+	test9();
+	test10();
+	test11();
+	test12();
 }
