@@ -221,6 +221,46 @@ void test7()
 	
 }
 
+void test8()
+{	
+	int scan_result;
+	int valid_result = 0;
+	double cup;	
+	double pint;
+	double ounce;
+	double soup;
+	double tea;
+
+	do{
+		printf("Please enter a cup value: ");
+		scan_result = scanf("%lf",&cup);
+		if(scan_result != 1){
+			if(scan_result == 0){
+				printf("error: invalid value: not a number.\n");
+			}else{
+				printf("error: EOF.But you can try again.\n");
+			}
+		}else{
+			if(cup < 0 || cup > DBL_MAX / 48){
+				printf("error: invalid value: %f\n",cup);
+			}else{
+				valid_result = 1;
+			}
+		}
+
+		int c;
+		while((c = getchar())!= '\n' && c != EOF);
+		clearerr(stdin);
+	}while(valid_result != 1);
+	
+	pint = cup / 2.0;
+	ounce = cup * 8.0;
+	soup = cup * 16.0;
+	tea = cup * 48.0;
+	
+	printf("pint = %.2f\nounce = %.2f\nsoup = %.2f\ntea = %.2f\n",pint,ounce,soup,tea);	
+	printf("pint = %f\nounce = %f\nsoup = %f\ntea = %f\n",pint,ounce,soup,tea);
+}
 int main(void)
 {
 	test1();
@@ -230,5 +270,7 @@ int main(void)
 	test5();
 	test6();
 	test7();
+	test8();
+
 	return 0;
 }
