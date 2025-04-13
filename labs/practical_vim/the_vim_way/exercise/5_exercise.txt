@@ -1,0 +1,13 @@
+The quick brown fox jumps over the lazy dog.
+The dog barks at the fox.
+The fox runs away from the dog.
+
+def calculate_area(radius):
+    pi = 3.14159
+    area = pi * radius * radius
+    return area
+
+def calculate_circumference(radius):
+    pi = 3.14159
+    circumference = 2 * pi * radius
+    return circumference
