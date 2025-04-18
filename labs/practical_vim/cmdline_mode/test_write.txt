@@ -1,0 +1,3 @@
+whoami
+ping www.baidu.com
+
